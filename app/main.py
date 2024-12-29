@@ -80,7 +80,7 @@ def create_pod_manifest(name, image, ports):
 
 
 
-@app.post("/create/challenge")
+@app.post("/challenge")
 def create_challenge(challenge: Challenge, x_token: str = Header()):
     token = None
     try:
@@ -101,7 +101,7 @@ class Flag(BaseModel):
     challenge_id: int
     points: int
 
-@app.post("/create/flag")
+@app.post("/flag")
 def create_flag(flag: Flag, x_token: str = Header()):
     token = None
     try:
@@ -112,6 +112,23 @@ def create_flag(flag: Flag, x_token: str = Header()):
         raise HTTPException(status_code=401, detail="Invalid token")
     db.add_flag(flag.flag, flag.challenge_id, flag.points)
     return {"status": "ok"}
+
+class User(BaseModel):
+    password: str|None
+    is_admin: bool|None
+
+@app.put("/user/{user_id}")
+def update_user(user_id: int, user: User, x_token: str = Header()):
+    token = None
+    try:
+        token = decode(x_token, key, algorithms=["RS256"])
+    except:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    if not token.get("admin"):
+        raise HTTPException(status_code=401, detail="Invalid token")
+    db.update_user(user_id, user.password, user.is_admin)
+    return {"status": "ok"}
+
 
 
 @app.get("/health")
