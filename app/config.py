@@ -1,8 +1,7 @@
 import os
 DEBUG = True
 # INSECURE KEY - only for testing
-PRIVATE_KEY_PATH = os.getenv("PRIVATE_KEY", "private.pem")
-PUBLIC_KEY_PATH = os.getenv("PUBLIC_KEY", "public.pem")
+PUBLIC_KEY_PATH = os.getenv("PUBLIC_KEY_PATH", "public.pem")
 
 DB_HOST = os.getenv("DB_HOST", "db")
 DB_USER = os.getenv("DB_USER", "postgres")
