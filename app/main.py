@@ -84,6 +84,8 @@ def create_pod_manifest(name, image, ports):
 def create_challenge(challenge: Challenge, x_token: str = Header()):
     token = None
     try:
+        print(x_token)
+        print(key)
         token = decode(x_token, key, algorithms=["RS256"])
     except:
         print("ERROR")
