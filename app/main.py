@@ -123,7 +123,9 @@ def update_user(user_id: int, user: User, x_token: str = Header()):
     try:
         token = decode(x_token, key, algorithms=["RS256"])
     except:
+        print("ERROR")
         raise HTTPException(status_code=401, detail="Invalid token")
+    print(token)
     if not token.get("admin"):
         raise HTTPException(status_code=401, detail="Invalid token")
     db.update_user(user_id, user.password, user.is_admin)
