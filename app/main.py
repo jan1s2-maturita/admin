@@ -87,8 +87,8 @@ def create_challenge(challenge: Challenge, x_token: str = Header()):
         print(x_token)
         print(key)
         token = decode(x_token, key, algorithms=["RS256"])
-    except:
-        print("ERROR")
+    except Exception as e:
+        print(e)
         raise HTTPException(status_code=401, detail="Invalid token")
     print(token)
     if not token.get("admin"):
