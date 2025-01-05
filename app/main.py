@@ -96,8 +96,9 @@ def create_challenge(challenge: Challenge, x_token: str = Header()):
     service_manifest = json.dumps(create_service_manifest(challenge.name, challenge.ports))
     pod_manifest = json.dumps(create_pod_manifest(challenge.name, challenge.image, challenge.ports))
     chall = db.add_challenge(challenge.name, challenge.description, challenge.category)
-    img = db.add_image(chall.id, pod_manifest)
-    db.add_service(img.id, service_manifest)
+    print(chall)
+    img = db.add_image(chall["id"], pod_manifest)
+    db.add_service(img["id"], service_manifest)
     return {"status": "ok"}
 
 class Flag(BaseModel):
