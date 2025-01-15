@@ -23,7 +23,8 @@ async def init(app: FastAPI):
         raise HTTPException(status_code=500, detail="Public key not found")
     yield
 
-app = FastAPI(lifespan=init)
+app = FastAPI(lifespan=init,
+              root_path="/api/admin")
 
 class Challenge(BaseModel):
     name: str
